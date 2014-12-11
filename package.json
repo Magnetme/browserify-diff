@@ -1,0 +1,11 @@
+{
+  "name": "turboloader",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "browserify": "^7.0.0",
+    "through2": "^0.6.3"
+  },
+  "author": "",
+  "license": "MIT"
+}

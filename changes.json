@@ -1,0 +1,6 @@
+{
+	"version" : 3,
+	"modules" : {
+		"/foo.js" : ["module.exports = function() { console.log('hoi4'); }", {}]
+	}
+}
