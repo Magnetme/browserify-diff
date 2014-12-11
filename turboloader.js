@@ -1,3 +1,9 @@
+/**
+ * Module loader script.
+ * This is a wrapper around the browserify-prelude function with support for intelligent updating of scripts.
+ * It keeps track of the version already downloaded to the user's pc (localstorage) and explicitely
+ * requests the server for a changeset. It will then update it's module cache with the changes.
+ */
 //TODO: cleaner (de)serialization
 function turboloader(opts, modules, cache, entry) {
 
@@ -48,6 +54,7 @@ function turboloader(opts, modules, cache, entry) {
 	}
 
 
+	//Do a request for the changeset
 	var url = opts.replacements.replace('%v', opts.version);
 	var feyenoord = new XMLHttpRequest();
 	feyenoord.addEventListener('readystatechange', function() {
@@ -65,7 +72,6 @@ function turboloader(opts, modules, cache, entry) {
 							moduleFunction,
 							mDeps
 						];
-						console.log(modules);
 					}
 					opts.storage.setItem('__v', diff.version);
 					opts.storage.setItem('__modules', JSON.stringify(modules, function serializer(key, value) {
@@ -84,6 +90,7 @@ function turboloader(opts, modules, cache, entry) {
 
 }
 
+//Returns a ready made prelude function.
 module.exports.createPrelude = function(opts) {
 	return '(' + turboloader.toString() + '.bind(null, ' + JSON.stringify(opts) + '))';
 };
