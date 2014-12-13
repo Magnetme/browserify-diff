@@ -39,7 +39,7 @@ function turboloader(opts, modules, cache, entry) {
 	//---END IMPORT PRELUDE---
 
 	opts.storage = opts.storage || window.localStorage;
-	var version = Number(opts.storage.getItem('__v') || opts.version);
+	opts.version = Number(opts.storage.getItem('__v') || opts.version);
 	var storedModules = opts.storage.getItem('__modules');
 	if (storedModules) {
 		modules = JSON.parse(storedModules);
@@ -49,8 +49,17 @@ function turboloader(opts, modules, cache, entry) {
 		}
 	}
 
-	function createModuleFunction(moduleString) {
-		return eval("(function(require,module,exports){\n" + moduleString + "})");
+	function createModuleFunction(moduleString, fileName) {
+		fileName = window.location.href + fileName;
+		fileName = fileName.replace(/\/+/g, '/');
+		var expression = ["(function(require,module,exports){",
+			"",
+			moduleString,
+			"",
+			"})",
+			"\/\/# sourceURL=" + fileName
+		].join('\n');
+		return eval(expression);
 	}
 
 
@@ -61,12 +70,12 @@ function turboloader(opts, modules, cache, entry) {
 		if (feyenoord.readyState === 4) {
 			if (feyenoord.status === 200) {
 				var diff = JSON.parse(feyenoord.responseText);
-				if (diff.version <= version) {
-					console.log('no newer version received');
+				if (!opts.alwaysReplace && diff.version === opts.version) {
+					console.log('Already having the most up to date version');
 				} else {
 					for (var moduleName in diff.modules) {
 						var module = diff.modules[moduleName];
-						var moduleFunction = createModuleFunction(module[0]);
+						var moduleFunction = createModuleFunction(module[0], moduleName);
 						var mDeps = module[1];
 						modules[moduleName] = [
 							moduleFunction,
