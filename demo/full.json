@@ -11,6 +11,13 @@
         "/bar.js": [
             "function (require,module,exports){\nmodule.exports = function() {\n\tconsole.log('bar');\n};\n\n}",
             {}
+        ],
+        "/foo.js": [
+            "function (require,module,exports){\nmodule.exports = function() {\n\tconsole.log(\"hoi\");\n};\n\n}",
+            {}
         ]
-    }
+    },
+    "entry": [
+        "./index.js"
+    ]
 }
