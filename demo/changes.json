@@ -1,6 +1,6 @@
 {
 	"version" : 3,
 	"modules" : {
-		"/foo.js" : ["module.exports = function() { console.log('hoi4'); }", {}]
+		"/foo.js" : ["function(require,module,exports){\nmodule.exports = function() { console.log('hoi4'); }\n}", {}]
 	}
 }

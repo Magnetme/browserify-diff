@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src='out.js'>
+		<script src='turboloader.js'></script>
+		<!--
+		<script src='out.js'></script>
+		-->
+		<script>
+			turboloader({
+				full : 'full.json',
+				replacements : '/changes.json?since=%v',
+				alwaysReplace : true
+			});
+		</script>
 		</script>
 	</head>
 </html>
