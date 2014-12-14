@@ -12,7 +12,7 @@
  *       the correct diff.
  * - [ ] Expose a function that enables the user code to invalidate the cache.
  */
-function turboloader(opts, modules, cache, entry) {
+function bundleloader(opts, modules, cache, entry) {
 	opts.storage = opts.storage || window.localStorage;
 	opts.storageKey = opts.storageKey || '__bundle';
 	//--START IMPORT PRELUDE-- TODO: don't copy-paste

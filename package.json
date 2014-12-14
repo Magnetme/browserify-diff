@@ -1,5 +1,5 @@
 {
-  "name": "turboloader",
+  "name": "browserify-diff",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
@@ -9,6 +9,9 @@
     "through2": "^0.6.3",
     "xtend": "^4.0.0"
   },
-  "author": "",
-  "license": "MIT"
+  "author": "Magnet.me",
+  "contributers" : [
+    "Tiddo Langerak<tiddolangerak@gmail.com>"
+  ],
+  "license": "APSL-2.0"
 }
