@@ -9,7 +9,9 @@
     "through2": "^0.6.3",
     "xtend": "^4.0.0"
   },
-  "author": "Magnet.me",
+  "author": "Magnet.me (https://github.com/Magnetme)",
+  "repository" : "https://github.com/Magnetme/browserify-diff.git",
+  "homepage" : "https://github.com/Magnetme/browserify-diff",
   "contributers" : [
     "Tiddo Langerak<tiddolangerak@gmail.com>"
   ],
