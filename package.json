@@ -1,6 +1,6 @@
 {
   "name": "browserify-diff",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "dependencies": {
     "browser-pack": "^3.2.0",
@@ -10,9 +10,9 @@
     "xtend": "^4.0.0"
   },
   "author": "Magnet.me (https://github.com/Magnetme)",
-  "repository" : "https://github.com/Magnetme/browserify-diff.git",
-  "homepage" : "https://github.com/Magnetme/browserify-diff",
-  "contributers" : [
+  "repository": "https://github.com/Magnetme/browserify-diff.git",
+  "homepage": "https://github.com/Magnetme/browserify-diff",
+  "contributers": [
     "Tiddo Langerak<tiddolangerak@gmail.com>"
   ],
   "license": "APSL-2.0"
