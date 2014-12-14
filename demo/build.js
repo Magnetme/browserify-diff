@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+//TODO: sourcemap support
+
 var b = require('browserify');
 var through = require('through2');
 var fs = require('fs');
@@ -15,22 +17,57 @@ var version = 3;
 var diffFile = '/changes.json';
 var outFile = '/full.json';
 
-//IDEA: basically we create a specially crafted preloader that caches all scripts and ask the servers if there are any changes
-//Possible improvements:
-//- Automatically generate version diffs
+var moduleHeader = 'function(require,module,exports){\n';
+var moduleFooter = '}';
+/**
+ * Creates a JSON string of a module.
+ */
+function createModuleJSONString(module) {
+	return '"' + (moduleHeader + module + moduleFooter)
+		.replace(/[\n\r]/g, '\\n')
+		.replace(/\t/g, "\\t")
+		.replace(/"/g, "\\\"") + '"'
+		;
+}
 
 //TODO: fix inconsistent naming
-b('./index.js', { debug : true , exposeAll : true })
+//TODO: fix that exposeAll doesn't has to be set
+b('./index.js', { exposeAll : false })
 .plugin(function(bundle, opts) {
-	//We need to be able to parse the generated module definition.
-	//We do this a bit hacky by setting prelude to Array, resulting in an output of the form
-	//Array(<modules>, <cache>, <entry>), which we can eval.
-	bundle._options.prelude = "Array";
-	bundle._options.exposeAll = true;
-	bundle.pipeline.get('pack').splice(0, 1, bpack(xtend(bundle._options, { raw : true })));
+
+	var isFirst = true;
+
+	var stream = through.obj(function(row, enc, next) {
+			var moduleString = '"' + row.id + '" : [' + createModuleJSONString(row.source) + ',' + JSON.stringify(row.deps) + ']';
+
+			if (!isFirst) {
+				moduleString = ',' + moduleString;
+			} else {
+				isFirst = false;
+			}
+
+			stream.push(Buffer(moduleString));
+			next();
+		}, function flush(){
+			stream.push(Buffer('}}'));
+			stream.push(null);
+		}
+	);
+
+	var diffStart = ['{',
+		'\t"version" : ' + version + ',',
+		'\t"modules" : {',
+		''
+	].join('\n');
+
+	stream.push(Buffer(diffStart));
+
+	bundle.pipeline.get('pack').splice(0, 1, stream);
 })
 .bundle(function(err, buff) {
 	if (err) throw err;
+	console.log(JSON.stringify(JSON.parse(buff.toString()), null, 4));
+	return;
 
 	var bundleString = buff.toString().trim();
 	var jsonBundle = bundleStringToJson(bundleString, version);
