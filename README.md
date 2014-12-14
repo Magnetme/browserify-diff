@@ -28,13 +28,16 @@ var options = browserifyDiff.wrapOptions(myBrowserifyOptions);
 
 var version = getNextVersion(); //e.g. git tag, date, semver, etc.
 
-browserify('app.js', options)
+browserify('./app.js', options)
 	.plugin(browserifyDiff.plugin, {
 		version : version,
-		diffPath : 'diff_' + version + 'json'
+		//We need the previous build to generate a diff. It is recommended to keep a backup of the
+		//latest stable version during development and use that one here.
+		previousBuild : JSON.parse(fs.readFileSync('previous.json', 'utf8'))
+		diffFile : 'diff_' + version + '.json'
 	})
 	.bundle()
-	.pipe(fs.createWriteStream('full.js'));
+	.pipe(fs.createWriteStream('full.json'));
 ```
 
 In your back-end (NodeJS-express example) <sup>2</sup>:

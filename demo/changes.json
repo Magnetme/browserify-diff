@@ -1,16 +1,1 @@
-{
-    "version": 3,
-    "modules": {
-        "./index.js": [
-            "function (require,module,exports){\nvar foo = require('./foo');\nvar bar = require('./bar');\n\nfoo();\n\n}",
-            {
-                "./bar": "/bar.js",
-                "./foo": "/foo.js"
-            }
-        ],
-        "/bar.js": [
-            "function (require,module,exports){\nmodule.exports = function() {\n\tconsole.log('bar');\n};\n\n}",
-            {}
-        ]
-    }
-}
+{"from":1,"to":3,"modules":{"./index.js":["function(require,module,exports){\nvar foo = require('./foo');\nvar bar = require('./bar');\n\nfoo();\n\n}",{"./foo":"/foo.js","./bar":"/bar.js"}],"/bar.js":["function(require,module,exports){\nmodule.exports = function() {\n\tconsole.log('bar');\n};\n\n}",{}]}}

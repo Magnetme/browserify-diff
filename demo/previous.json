@@ -2,13 +2,13 @@
     "version": 1,
     "modules": {
         "./index.js": [
-            "function (require,module,exports){\nvar foo = require('./foo');console.log(3);\n\nfoo();\n\n}",
+            "function(require,module,exports){\nvar foo = require('./foo');console.log(3);\n\nfoo();\n\n}",
             {
                 "./foo": "/foo.js"
             }
         ],
         "/foo.js": [
-            "function (require,module,exports){\nmodule.exports = function() {\n\tconsole.log(\"hoi\");\n};\n\n}",
+            "function(require,module,exports){\nmodule.exports = function() {\n\tconsole.log(\"hoi\");\n};\n\n}",
             {}
         ]
     },
