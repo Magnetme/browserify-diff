@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "description": "Module to allow browserify bundle caching and fast minimal cache updates based on version diffs.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "browserify-json-bundle-diff": "0.0.1",
+    "browserify-json-bundle-loader": "0.0.2",
+    "browserify-json-bundler": "0.0.1"
+  },
   "devDependencies": {
     "browserify": "^7.0.1"
   },
