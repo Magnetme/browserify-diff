@@ -1,6 +1,6 @@
 {
   "name": "browserify-diff",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Module to allow browserify bundle caching and fast minimal cache updates based on version diffs.",
   "main": "index.js",
   "dependencies": {
