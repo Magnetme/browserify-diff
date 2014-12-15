@@ -5,8 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "browserify-json-bundle-diff": "0.0.1",
-    "browserify-json-bundle-loader": "0.0.2",
-    "browserify-json-bundler": "0.0.1"
+    "browserify-json-bundle-loader": "0.0.3",
+    "browserify-json-bundler": "0.0.2"
   },
   "devDependencies": {
     "browserify": "^7.0.1"
