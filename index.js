@@ -1,11 +1,11 @@
 var bundlerPlugin = require('browserify-json-bundler');
 var bundleDiff = require('browserify-json-bundle-diff');
 var fs = require('fs');
+var _ = require('lodash');
+var DiffGenerator = require('./DiffGenerator');
 
-//General todo:
-//- Add bjb-loader as dependency
-//- Symlink minified script to root directory, such that it can be directly required/copied from this module
-//- Add README.md
+var emptyDiff = {};
+
 var browserifyDiff;
 module.exports = browserifyDiff = {
 	browserifyOptions : {
@@ -18,8 +18,8 @@ module.exports = browserifyDiff = {
 		//1. Attach the bundler plugin
 		b.plugin(bundlerPlugin, opts);
 
-		//2. Hook into the bundle event to create diffs when requested
-		if (opts.diffFile && opts.previousBuild) {
+		//2. Hook into the bundle event to create a changeset (if possible)
+		if (opts.changesetFile) {
 			b.on('bundle', function(stream) {
 				var bundleString = '';
 				stream.on('data', function(data) {
@@ -27,20 +27,21 @@ module.exports = browserifyDiff = {
 				});
 				stream.on('end', function() {
 					var bundle = JSON.parse(bundleString);
-					var diff = bundleDiff.create(opts.previousBuild, bundle);
+					var diff;
+					if (opts.previousBuild) {
+						diff = bundleDiff.create(opts.previousBuild, bundle);
+					} else {
+						//If there's no previous version we simply transform the entire build into a changeset
+						diff = bundle;
+						diff.to = diff.version;
+						diff.from = null;
+						delete diff.version;
+					}
 					//fire and forget
-					fs.writeFile(opts.diffFile, JSON.stringify(diff), "utf8");
+					fs.writeFile(opts.changesetFile, JSON.stringify(diff), "utf8");
 				});
 			});
 		}
 	},
-	getDiffSince : function(opts, version) {
-		//TODO:
-		//- Find all diffs since version
-		//- Merge diffs using browserify-json-bundle-diff
-		//- Return
-	},
-	/* TODO: express middleware (for the future)
-	express : function() {},
-	*/
+	Generator : DiffGenerator
 };

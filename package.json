@@ -4,12 +4,14 @@
   "description": "Module to allow browserify bundle caching and fast minimal cache updates based on version diffs.",
   "main": "index.js",
   "dependencies": {
-    "browserify-json-bundle-diff": "0.0.1",
-    "browserify-json-bundle-loader": "0.0.3",
-    "browserify-json-bundler": "0.0.2"
+    "browserify-json-bundle-diff": "0.0.2",
+    "browserify-json-bundle-loader": "0.0.5",
+    "browserify-json-bundler": "0.0.2",
+    "lodash": "^2.4.1"
   },
   "devDependencies": {
-    "browserify": "^7.0.1"
+    "browserify": "^7.0.1",
+    "express": "^4.10.6"
   },
   "repository": {
     "type": "git",

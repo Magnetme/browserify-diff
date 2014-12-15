@@ -1,0 +1,1 @@
+{"from":4,"to":5,"modules":{"/foo.js":["module.exports = function() {\n\tconsole.log(\"foo\");\n};\n",{}],"./foo.js":null}}

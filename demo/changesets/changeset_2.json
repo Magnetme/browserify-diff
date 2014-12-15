@@ -1,0 +1,1 @@
+{"from":1,"to":2,"modules":{"./index.js":["var foo = require('./foo');\nvar bar = require('./bar');\n\nconsole.log(\"foobar\");\n\nfoo();\n",{"./foo":"/foo.js","./bar":"/bar.js"}]}}
